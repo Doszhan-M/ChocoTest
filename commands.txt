@@ -1,0 +1,30 @@
+python3 manage.py collectstatic
+
+
+python3 manage.py createsuperuser
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py runserver
+
+celery -A Chocofamily worker -l INFO
+
+sudo fuser -k 8000/tcp
+
+python3 manage.py makemigrations ToDo
+
+
+{
+    "user": {
+        "username": "user1",
+        "email": "user1@user.user",
+        "password": "qweasdzxc"
+    }
+}
+
+{
+    "user": {
+        "email": "user1@user.user",
+        "username": "user1",
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OSwiZXhwIjoxNjMzNDk1MDExfQ.w55Dcak4sO8M3TsFHFaJ4zrOHRmHG-uu7X6KiP5d6IE"
+    }
+}
