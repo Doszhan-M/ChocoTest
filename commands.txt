@@ -1,5 +1,8 @@
 python3 manage.py collectstatic
 
+./manage.py makemigrations Accounts
+
+python3 manage.py shell_plus
 
 python3 manage.py createsuperuser
 python3 manage.py makemigrations
@@ -10,7 +13,6 @@ celery -A Chocofamily worker -l INFO
 
 sudo fuser -k 8000/tcp
 
-python3 manage.py makemigrations ToDo
 
 
 {
@@ -22,9 +24,11 @@ python3 manage.py makemigrations ToDo
 }
 
 {
-    "user": {
-        "email": "user1@user.user",
-        "username": "user1",
-        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OSwiZXhwIjoxNjMzNDk1MDExfQ.w55Dcak4sO8M3TsFHFaJ4zrOHRmHG-uu7X6KiP5d6IE"
-    }
+    "email": "user1@user.user",
+    "username": "user1",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNjMzNTE2NTkyfQ.8a-STBnIt2lDc-aCviitObx5cGC7PqbbCD878gVLl8c"
+
 }
+
+ToDo.objects.create(headline='headline', description='description', deadline=datetime.datetime.now())
+ToDo.objects.create(headline='headline', description='description', deadline='2020-10-05 20:55:48.683595')
