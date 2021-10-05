@@ -102,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Asia/Almaty'
 
@@ -136,7 +136,5 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('Apps.Accounts.backends.JWTAuthentication',),
 }
 
-
-import datetime
-
-print(datetime.datetime.now().time())
+from django.utils import timezone
+print(timezone.now())

@@ -8,4 +8,4 @@ class UserPanel(admin.ModelAdmin):
     ordering = ['-created_at']
 
 
-# admin.site.register(User)
+admin.site.register(User)
