@@ -1,4 +1,6 @@
-signinPage() // Проверить storage
+window.localStorage.removeItem('token');
+
+showSigninPage() // Проверить storage
 
 
 

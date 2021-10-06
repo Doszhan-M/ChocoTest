@@ -46,3 +46,21 @@ main {
     align-items: center;
     justify-content: center;
 }
+
+.signin__text {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    margin-top: 5%;
+}
+
+.form_btn_signup {
+    color: #030f47;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+button:active {
+    transform: scale(1.2);
+}
