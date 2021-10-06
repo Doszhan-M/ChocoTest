@@ -4,6 +4,15 @@ from django.contrib.auth import authenticate
 from .models import User
 
 
+class StrictBooleanField(serializers.BooleanField):
+    def from_native(self, value):
+        if value in ('true', 't', 'True', '1'):
+            return True
+        if value in ('false', 'f', 'False', '0'):
+            return False
+        return None
+
+
 class RegistrationSerializer(serializers.ModelSerializer):
     """ Сериализация регистрации пользователя. """
     password = serializers.CharField(
@@ -15,10 +24,27 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'password', 'token']
+        fields = ['email', 'username', 'password', 'token', 'is_employee', 'is_administrator',]
+
+
+    def validate(self, data):
+        '''Валидация булевых полей.'''
+        is_employee = data['is_employee']
+        is_administrator = data['is_administrator']
+        if is_employee and is_administrator in ('true', 't', 'True', '1'):
+            is_employee = True
+            return is_employee
+        if is_employee and is_administrator in ('false', 'f', 'False', '0'):
+            is_employee = False
+            return is_employee
+        return data
+
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        '''Создать юзера через функцию в UserManager.'''
+        user = User.objects.create_user(**validated_data)
+        return user
+
 
 
 class LoginSerializer(serializers.Serializer):

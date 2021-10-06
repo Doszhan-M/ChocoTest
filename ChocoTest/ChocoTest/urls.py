@@ -12,4 +12,5 @@ urlpatterns = [
 
     path('api/', include('Apps.Accounts.urls', namespace='Accounts')),
     path('api/', include('Apps.ToDo.urls', namespace='ToDo')),
+    path('', include('Apps.ToDo.urls', namespace='ToDo')),
 ]

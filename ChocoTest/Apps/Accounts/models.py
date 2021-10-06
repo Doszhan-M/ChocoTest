@@ -7,19 +7,24 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class UserManager(BaseUserManager):
     """"""
-    def create_user(self, username, email, password=None):
+    def create_user(self, username, email, password=None, is_employee=False, is_administrator=False):
         if username is None:
             raise TypeError('Users must have a username.')
 
         if email is None:
             raise TypeError('Users must have an email address.')
 
+        print(is_employee)
+        print(type(is_employee))
+
         user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
+        user.is_employee = is_employee
+        user.is_administrator = is_administrator
         user.save()
         return user
 
-    def create_superuser(self, username, email, password):
+    def create_superuser(self, username, email, password,):
         """ Создает и возвращает пользователя с привилегиями суперадмина. """
         if password is None:
             raise TypeError('Superusers must have a password.')
@@ -36,6 +41,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(db_index=True, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_employee = models.BooleanField(default=False)
+    is_administrator = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     USERNAME_FIELD = 'email'
