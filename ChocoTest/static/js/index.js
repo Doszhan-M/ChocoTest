@@ -1,14 +1,6 @@
-window.localStorage.removeItem('token');
+// window.localStorage.removeItem('token');
 
-showSigninPage() // Проверить storage
-
-
+showLoginPage() // Проверить storage и показать страницу авторизации
 
 
 
-// setTimeout(() => {
-//     window.localStorage.setItem('token', 'afafafaff');
-//     tokenStorage = window.localStorage.getItem('token')
-//     console.log(tokenStorage);
-//     signinPage()
-// }, 2000)
