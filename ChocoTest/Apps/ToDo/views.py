@@ -1,3 +1,4 @@
+from django.db import connections
 from django.views.generic import TemplateView
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
@@ -25,21 +26,22 @@ class ToDoCreateApi(generics.CreateAPIView):
     serializer_class = ToDoserializer
     permission_classes = (IsEmployeeUser,)
 
-    def perform_create(self, serializer):
-        print(self)
-        serializer.save()
-
     def post(self, request, *args, **kwargs):
-        if not request.data['deadline']:
-            request.data['deadline'] = None
-        if not request.data['priority']:
-            request.data['priority'] = 3
+        try:
+            if not request.data['deadline']:
+                request.data['deadline'] = None
+                
+            if not request.data['priority']:
+                request.data['priority'] = 3
+        except KeyError:
+            self.create(request, *args, **kwargs)
         return self.create(request, *args, **kwargs)
+
 
 class ToDoUpdateDelApi(generics.RetrieveUpdateDestroyAPIView):
     '''Обновить или удалить задачу'''
     serializer_class = ToDoserializer
-    permission_classes = (IsAdministratorUser,)
+    permission_classes = (IsAdministratorUser,)             
 
     def get_object(self):
         '''Получить обьект.'''

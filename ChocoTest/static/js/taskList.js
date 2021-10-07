@@ -2,7 +2,7 @@ todo__wrapper = document.querySelector('.todo__wrapper')
 
 async function showTaskListPage() {
     tokenStorage = window.localStorage.getItem('token')
-    if (tokenStorage == null || tokenStorage == undefined) {
+    if (tokenStorage == null) {
         showLoginPage()
     } else {
 
@@ -112,11 +112,21 @@ async function showTaskListPage() {
                 }
             }
             // вывести все блоки
-            fetch(`/api/todocreate/`, options)
-                .then(response => response.json())
-                .then(json => { alert(json.detail) })
-                .catch(json => {
+            fetch(`/api/todocreate/`, options).then((response) => {
+                if (response.status == 403) {
+                    alert('У вас недостаточно прав для выполнения данного действия')
+                }
+                if (response.status == 201) {
                     showAddTaskPage()
+                }
+                if (response.status == 400) {
+                    showAddTaskPage()
+                }
+                return response
+            }).then(response => response.json())
+                .then(json => {console.log(json)})
+                .catch(json => {
+                    showLoginPage()
                 })
         })
 

@@ -6,12 +6,14 @@ sign__block = document.querySelector('.sign__block')
 // Функция показа страницы авторизации
 function showLoginPage() {
     tokenStorage = window.localStorage.getItem('token')
-    console.log('tokenStorage', tokenStorage)
 
     document.querySelector('.todoadd__wrapper').innerHTML = ``
     document.querySelector('.todo__wrapper').innerHTML = ``
-
-    if (tokenStorage == null || tokenStorage == undefined) {
+    if (tokenStorage == 'undefined') {
+        tokenStorage = window.localStorage.removeItem('token')
+    }
+    console.log('tokenStorage', tokenStorage)
+    if (tokenStorage == null) {
         let LoginForm = `
         <div class="sign">
         <form class="login100-form validate-form">
@@ -95,9 +97,7 @@ async function signIn() {
         .then(json => {
             // записать токен в storage
             window.localStorage.setItem('token', json.token);
-
         })
-
     showLoginPage()
 }
 
@@ -106,8 +106,11 @@ async function signIn() {
 function showSignUpPage() {
     tokenStorage = window.localStorage.getItem('token')
     console.log('tokenStorage', tokenStorage)
-
-    if (tokenStorage == null|| tokenStorage == undefined) {
+    if (tokenStorage == 'undefined') {
+        tokenStorage = window.localStorage.removeItem('token')
+    }
+    console.log('tokenStorage', tokenStorage)
+    if (tokenStorage == null) {
         let SignUpForm = `
         <form class="login100-form validate-form">
             <span class="login100-form-title">
@@ -212,7 +215,7 @@ async function signUn() {
     await fetch(`/api/users/signup/`, options)
         .then(response => response.json())
         .then(json => {
-            if (json.token != undefined) {
+            if (json.token != 'undefined') {
                 // записать токен в storage
                 window.localStorage.setItem('token', json.token);
                 tokenStorage = window.localStorage.getItem('token')
@@ -221,13 +224,9 @@ async function signUn() {
                 alert('Неправильно заполнены поля')
                 showSignUpPage
             }
-
-
-
-
         })
 
-    showSignUpPage()
+    showLoginPage()
 
 }
 

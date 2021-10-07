@@ -6,3 +6,5 @@ class TodoConfig(AppConfig):
     name = 'Apps.ToDo'
     verbose_name = "ToDo"
 
+    def ready(self):
+        import Apps.ToDo.signals
