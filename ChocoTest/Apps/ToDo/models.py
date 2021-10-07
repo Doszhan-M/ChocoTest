@@ -11,17 +11,18 @@ class ToDo(models.Model):
         LOW = 0, ('Низкий')
         NORMAL = 1, ('Нормальный')
         HIGH = 2, ('Высокий')
+        NOT = 3, ('Не присвоен')
 
     headline = models.CharField(max_length=200, blank=False, verbose_name='Заголовок',)
     description = models.TextField(blank=False, verbose_name='Описание',)
     priority = models.PositiveIntegerField(choices=PriorityList.choices, default=PriorityList.NORMAL, blank=True, null=True)
-    deadline = models.DateTimeField(blank=True, null=True)
+    deadline = models.DateTimeField(blank=True, null=True, )
 
     def clean(self) -> None:
         deadline = self.deadline
-        print(deadline)
-        if deadline < timezone.now():
-            raise ValidationError("The date cannot be in the past!")
+        if deadline != None:
+            if deadline < timezone.now():
+                raise ValidationError("The date cannot be in the past!")
         return deadline
 
     class Meta:

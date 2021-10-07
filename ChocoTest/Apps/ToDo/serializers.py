@@ -6,12 +6,17 @@ from django.utils import timezone
 from .models import ToDo
 
 
+
+
 class ToDoserializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True) #  только на чтение.
+
     class Meta:
         model = ToDo
-        fields = ('headline', 'description', 'priority', 'deadline')
+        fields = ('headline', 'description', 'priority', 'deadline', 'id')
 
     def validate(self, data):
-        if data['deadline'] < timezone.now():
-            raise serializers.ValidationError("Дедлайн не может быть в прошлом")
+        if data['deadline'] != None:
+            if data['deadline'] < timezone.now():
+                raise serializers.ValidationError("Дедлайн не может быть в прошлом")
         return data

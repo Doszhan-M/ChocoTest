@@ -29,6 +29,4 @@ sudo fuser -k 8000/tcp
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNjMzNTE2NTkyfQ.8a-STBnIt2lDc-aCviitObx5cGC7PqbbCD878gVLl8c"
 
 }
-
-ToDo.objects.create(headline='headline', description='description', deadline=datetime.datetime.now())
-ToDo.objects.create(headline='headline', description='description', deadline='2020-10-05 20:55:48.683595')
+2021-11-07T23:50

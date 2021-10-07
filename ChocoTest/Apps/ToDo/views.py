@@ -19,12 +19,23 @@ class ToDoListApi(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
 
+
 class ToDoCreateApi(generics.CreateAPIView):
     '''Создать задачу'''
     serializer_class = ToDoserializer
     permission_classes = (IsEmployeeUser,)
 
-    
+    def perform_create(self, serializer):
+        print(self)
+        serializer.save()
+
+    def post(self, request, *args, **kwargs):
+        if not request.data['deadline']:
+            request.data['deadline'] = None
+        if not request.data['priority']:
+            request.data['priority'] = 3
+        return self.create(request, *args, **kwargs)
+
 class ToDoUpdateDelApi(generics.RetrieveUpdateDestroyAPIView):
     '''Обновить или удалить задачу'''
     serializer_class = ToDoserializer
@@ -33,7 +44,14 @@ class ToDoUpdateDelApi(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         '''Получить обьект.'''
         data = self.request.data.get('data')
-        object = ToDo.objects.get(headline=data)
+        object = ToDo.objects.get(id=data)
         return object
+
+    def patch(self, request, *args, **kwargs):
+        if not request.data['deadline']:
+            request.data['deadline'] = None
+        if not request.data['priority']:
+            request.data['priority'] = 3
+        return self.update(request, *args, **kwargs)
     
 

@@ -8,8 +8,11 @@ function showLoginPage() {
     tokenStorage = window.localStorage.getItem('token')
     console.log('tokenStorage', tokenStorage)
 
-    if (tokenStorage == null) {
-        let = LoginForm = `
+    document.querySelector('.todoadd__wrapper').innerHTML = ``
+    document.querySelector('.todo__wrapper').innerHTML = ``
+
+    if (tokenStorage == null || tokenStorage == undefined) {
+        let LoginForm = `
         <div class="sign">
         <form class="login100-form validate-form">
             <span class="login100-form-title">
@@ -70,11 +73,13 @@ function showLoginPage() {
 async function signIn() {
     let form_email = document.querySelector('#form_email')
     let form_pass = document.querySelector('#form_pass')
+    let email = form_email.value
+    let pass = form_pass.value
 
     let body = JSON.stringify({
-        'user': {
-            email: form_email.value,
-            password: form_pass.value
+        "user": {
+            email: `${email}`,
+            password: `${pass}`
         }
     });
     const options = {
@@ -90,6 +95,7 @@ async function signIn() {
         .then(json => {
             // записать токен в storage
             window.localStorage.setItem('token', json.token);
+
         })
 
     showLoginPage()
@@ -101,8 +107,8 @@ function showSignUpPage() {
     tokenStorage = window.localStorage.getItem('token')
     console.log('tokenStorage', tokenStorage)
 
-    if (tokenStorage == null) {
-        let = SignUpForm = `
+    if (tokenStorage == null|| tokenStorage == undefined) {
+        let SignUpForm = `
         <form class="login100-form validate-form">
             <span class="login100-form-title">
                 Register
@@ -206,12 +212,18 @@ async function signUn() {
     await fetch(`/api/users/signup/`, options)
         .then(response => response.json())
         .then(json => {
-            console.log('json.token', json.token)
-            // записать токен в storage
-            window.localStorage.setItem('token', json.token);
+            if (json.token != undefined) {
+                // записать токен в storage
+                window.localStorage.setItem('token', json.token);
+                tokenStorage = window.localStorage.getItem('token')
+                console.log('tokenStorage', tokenStorage)
+            }   else {
+                alert('Неправильно заполнены поля')
+                showSignUpPage
+            }
 
-            tokenStorage = window.localStorage.getItem('token')
-            console.log('tokenStorage', tokenStorage)
+
+
 
         })
 
