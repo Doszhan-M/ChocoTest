@@ -135,6 +135,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'ChocoTest.exceptions.core_exception_handler',
     'NON_FIELD_ERRORS_KEY': 'error',
     'DEFAULT_AUTHENTICATION_CLASSES': ('Apps.Accounts.backends.JWTAuthentication',),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 # Настройки почтового сервера
@@ -147,7 +148,7 @@ EMAIL_PORT = 25
 EMAIL_USE_TLS = False
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-ADMINS = os.getenv("ADMINS")
+ADMINS = [('Admin', 'admin@mail.ru'),]
 EMAIL_SUBJECT_PREFIX = '[Django] '
 
 
@@ -156,3 +157,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+
+from django.utils import timezone
+print(timezone.now())

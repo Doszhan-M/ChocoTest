@@ -1,16 +1,11 @@
 from django.db import connections
 from django.views.generic import TemplateView
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .permissions import IsEmployeeUser, IsAdministratorUser
 
 from .serializers import ToDoserializer
 from .models import ToDo
-
-
-class IndexView(TemplateView):
-    """Начальный шаблон для js"""
-    template_name = 'index.html'
 
 
 class ToDoListApi(generics.ListAPIView):
@@ -18,7 +13,6 @@ class ToDoListApi(generics.ListAPIView):
     serializer_class = ToDoserializer
     queryset = ToDo.objects.all()
     permission_classes = (IsAuthenticated,)
-
 
 
 class ToDoCreateApi(generics.CreateAPIView):
@@ -55,5 +49,10 @@ class ToDoUpdateDelApi(generics.RetrieveUpdateDestroyAPIView):
         if not request.data['priority']:
             request.data['priority'] = 3
         return self.update(request, *args, **kwargs)
+
+        
+class IndexView(TemplateView):
+    """Начальный шаблон для js"""
+    template_name = 'index.html'
     
 

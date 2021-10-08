@@ -17,27 +17,24 @@ def deadline_alert(id):
 
     while (deadline - timezone.now()).seconds >= 3600:
         if (deadline - timezone.now()).seconds > 3600 * 24:
-            print(f'sleep left {(deadline - timezone.now()).seconds} sec')
             time.sleep(3600 * 24)
         elif (deadline - timezone.now()).seconds > 3600 * 12:
-            print(f'sleep left {(deadline - timezone.now()).seconds} sec')
             time.sleep(3600 * 4)
         elif (deadline - timezone.now()).seconds > 3600 * 2:
-            print(f'sleep left {(deadline - timezone.now()).seconds} sec')
             time.sleep(3600)
         elif (deadline - timezone.now()).seconds > 3600:
-            print(f'sleep left {(deadline - timezone.now()).seconds} sec')
             time.sleep(60)
+            
     if (deadline - timezone.now()).seconds <= 3600:
         print(f'send {(deadline - timezone.now()).seconds} sec')
         # отправить форму по email всем пользователям
         html_content = render_to_string('alert_email.html',)
         array = User.objects.all()
-        for i in array:
+        for user in array:
             msg = EmailMultiAlternatives(
                 subject=f'Уведомление от ChocoTest',
                 from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[i.email]
+                to=[user.email]
             )
             msg.attach_alternative(html_content, "text/html")
             msg.send()  # отсылаем

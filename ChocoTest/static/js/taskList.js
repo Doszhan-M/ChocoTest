@@ -79,6 +79,7 @@ async function showTaskListPage() {
                         let desc = document.querySelector(`#desc${json[elem].id}`).value
                         let optionsIndex = myOptions.selectedIndex
                         let deadline = document.querySelector(`#deadline${json[elem].id}`).value
+                        console.log(deadline)
                         toDoUpdate(id, headline, desc, optionsIndex, deadline)
                     })
                 }

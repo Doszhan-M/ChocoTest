@@ -18,12 +18,12 @@ class ToDo(models.Model):
     priority = models.PositiveIntegerField(choices=PriorityList.choices, default=PriorityList.NORMAL, blank=True, null=True)
     deadline = models.DateTimeField(blank=True, null=True, )
 
-    def clean(self) -> None:
+    def clean(self):
         deadline = self.deadline
         if deadline != None:
             if deadline < timezone.now():
                 raise ValidationError("The date cannot be in the past!")
-        return deadline
+
 
     class Meta:
         verbose_name = 'Задача'
