@@ -8,8 +8,8 @@ async function showAddTaskPage() {
         todoCard.innerHTML = `
         <form action="">
         <div class="todo">
-            <input class="todo__headline" type="text" value="egseef">
-            <textarea class="todo__desc">44444</textarea>
+            <input class="todo__headline" type="text" value="">
+            <textarea class="todo__desc"></textarea>
             <div class="todo__priority">
                 <p>Приоритет</p>
                 <select id="select">
